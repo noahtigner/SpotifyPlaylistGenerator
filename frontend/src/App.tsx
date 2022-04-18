@@ -1,14 +1,22 @@
 import React, {useEffect, useState} from 'react';
 // import { useHistory, useLocation } from 'react-router-dom';
+// import { Button } from '@mantine/core';
 
-
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+// import './App.css';
 
 import axios from './utils/axiosConfig.jsx';
 import SpotifyAuthLink from './spotifyAuthLink';
 
-function App() {
+import { Button } from '@mui/material'
+
+// import { MantineProvider } from '@mantine/core';
+// import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
+// import theme from './theme';
+
+// import theme from './theme';
+
+const App = () => {
 	// const location = useLocation();
 	// const history = useHistory();
 
@@ -92,32 +100,40 @@ function App() {
 	// 	.then(data => console.log(data));
 	// }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {/* <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p> */}
-        {/* <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
 
-		{/* <button
-			onClick={() => getCode()}
-		>
-			CLICK
-		</button> */}
-		{/* <a href={get_token_uri()}>Login to Spotify</a> */}
-		<SpotifyAuthLink />
-		<p>{JSON.stringify(userData)}</p>
-      </header>
-    </div>
+	
+
+  return (
+
+		<>
+		{/* <header> */}
+			{/* <img src={logo} className="App-logo" alt="logo" /> */}
+			{/* <p>
+			Edit <code>src/App.tsx</code> and save to reload.
+			</p> */}
+			{/* <a
+			className="App-link"
+			href="https://reactjs.org"
+			target="_blank"
+			rel="noopener noreferrer"
+			>
+			Learn React
+			</a> */}
+
+			{/* <button
+				onClick={() => getCode()}
+			>
+				CLICK
+			</button> */}
+			{/* <a href={get_token_uri()}>Login to Spotify</a> */}
+			
+		{/* </header> */}
+			<Button variant="outlined">Hello world!</Button>
+			
+			<SpotifyAuthLink />
+			<p>{JSON.stringify(userData)}</p>
+		</>
+
   );
 }
 
