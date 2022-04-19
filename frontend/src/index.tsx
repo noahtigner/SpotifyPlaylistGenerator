@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { HashRouter, Routes, Route } from "react-router-dom";
 // import reportWebVitals from './reportWebVitals';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles'
@@ -11,21 +12,38 @@ import theme from './styles/theme';
 import Header from 'components/_layout/Header';
 import SpotifyAuthRedirect from 'components/spotifyAuthorization/SpotifyAuthRedirect'
 import SpotifyAuthLink from 'components/spotifyAuthorization/SpotifyAuthLink';
+import AuthenticatedRoute from 'components/AuthenticatedRoute';
+import Dashboard from 'components/Dashboard';
 
 
-const App = () => (
-	<React.StrictMode>
-		<ThemeProvider theme={theme}>
-			<CssBaseline enableColorScheme/>
+const App = () => {
+	return (
+		<React.StrictMode>
+			<ThemeProvider theme={theme}>
+				<CssBaseline enableColorScheme/>
 
-			<Header />
-			<Button variant="outlined" size="small">Hello world!</Button>
-			
-			<SpotifyAuthLink />
-			<SpotifyAuthRedirect />
-		</ThemeProvider>
-	</React.StrictMode>
-);
+				<Header />
+
+				<HashRouter>
+					<Routes>
+
+						<Route path='/spotify_redirect' element={<SpotifyAuthRedirect />} />
+							
+						<Route path='/dashboard' element={<AuthenticatedRoute content={<Dashboard />}/>} />
+
+						<Route path='/' element={
+							<>
+								<Button variant="outlined" size="small">Hello world!</Button>
+								<SpotifyAuthLink />
+							</>
+						} />
+
+					</Routes>
+				</HashRouter>
+			</ThemeProvider>
+		</React.StrictMode>
+	)
+};
 
 
 const root = ReactDOM.createRoot(

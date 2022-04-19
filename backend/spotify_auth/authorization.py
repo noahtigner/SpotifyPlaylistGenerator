@@ -29,7 +29,7 @@ class SpotifyAuth:
         )
 
         if r.status_code != 200:
-            raise Exception(f'received {r.status_code}')
+            raise Exception(f'Spotify returned {r.status_code}: {r.text}')
 
         response_data = r.json()
         logger.info(response_data)
@@ -86,7 +86,7 @@ class SpotifyAuth:
         )
 
         if r.status_code != 200:
-            raise Exception(f'received {r.status_code}')
+            raise Exception(f'Spotify returned {r.status_code}: {r.text}')
 
         return r.json()['id']
 

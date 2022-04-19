@@ -1,5 +1,7 @@
 import React from 'react';
+// import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
+
 
 // import settings from "settings.json";
 
@@ -12,11 +14,14 @@ const SpotifyAuthLink = () => {
 	const RESPONSE_TYPE = 'code';
 
 	const get_token_uri = () => {
-		return `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPES}`
+		const path = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&scope=${SCOPES}&redirect_uri=${REDIRECT_URI}`;
+		console.log(path);
+		return path;
     }
     
     return (
 		// <Link href={get_token_uri()} target="_blank" rel="noopener">Login to Spotify</Link>
+		// <Link component={RouterLink} to={get_token_uri()}>Login to Spotify</Link>
 		<Link href={get_token_uri()}>Login to Spotify</Link>
     )
 }
