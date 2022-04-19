@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from '@mui/material';
+
+// import settings from "settings.json";
 
 
 const SpotifyAuthLink = () => {
     const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
-	const CLIENT_ID = '12073d0b13714c47908d90ca2c88ad7d';
-	const REDIRECT_URI = 'http://localhost:3000/';
+	const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+	const REDIRECT_URI = process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
 	const SCOPES = 'user-read-private user-read-email';
 	const RESPONSE_TYPE = 'code';
 
@@ -13,7 +16,8 @@ const SpotifyAuthLink = () => {
     }
     
     return (
-        <a style={{border: '1px solid white', borderRadius: 4}} href={get_token_uri()}>Login to Spotify</a>
+		// <Link href={get_token_uri()} target="_blank" rel="noopener">Login to Spotify</Link>
+		<Link href={get_token_uri()}>Login to Spotify</Link>
     )
 }
 
