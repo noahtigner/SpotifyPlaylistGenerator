@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate, useSearchParams, createSearchParams } from 'react-router-dom';
+import { useAppSelector as useSelector, useAppDispatch as useDispatch } from 'state/hooks';
+
 
 import axios from 'utils/axiosConfig.jsx';
 // import SpotifyAuthLink from 'components/spotifyAuthorization/SpotifyAuthLink';
@@ -9,11 +11,17 @@ const SpotifyAuthRedirect = () => {
 	// const [userData, setUserData] = useState({});
 	const navigate = useNavigate();
 	const [search, setSearch] = useSearchParams();
+	const userData = useSelector(state => state.userData);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(window.location.search);
 		// const access_code = search.get('code');
 		// console.log(access_code);
+
+		if(userData.id !== '') {
+			navigate('/dashboard', { replace: true });
+		}
 
 		if (queryParams.has('code')) {
 			const access_code = queryParams.get('code')
@@ -34,12 +42,17 @@ const SpotifyAuthRedirect = () => {
 				// history.replace({
 				// 	search: '',
 				// })
-				window.localStorage.setItem('userData', 
-					JSON.stringify({
-						token: response.data.token,
-						id: response.data.user_id
-					})
-				);
+				// window.localStorage.setItem('userData', 
+				// 	JSON.stringify({
+				// 		token: response.data.token,
+				// 		id: response.data.user_id
+				// 	})
+				// );
+
+				dispatch({ type: 'userData/updated', payload: {
+					token: response.data.token,
+					id: response.data.user_id
+				}});
 
 				console.log('redirecting');
 				// setSearch({});
@@ -50,7 +63,7 @@ const SpotifyAuthRedirect = () => {
 				// history.replace({
 				// 	search: '',
 				// })
-				navigate("/");
+				navigate("/login");
             });
 
 			// // queryParams.delete('code');
@@ -61,6 +74,7 @@ const SpotifyAuthRedirect = () => {
 		}
 		else{
 			console.log('else')
+			navigate("/login");
 		}
 	}, []);
     

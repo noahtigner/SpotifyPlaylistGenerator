@@ -12,7 +12,7 @@ const Dashboard = (props) => {
         window.location.search = '';
     }, []);
     
-    return (<div>authd</div>)
+    return (<div>authorized</div>)
 }
 
 export default Dashboard;

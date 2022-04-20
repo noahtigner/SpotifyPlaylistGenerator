@@ -1,13 +1,33 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
+import { useNavigate } from 'react-router-dom';
+
+import { useAppSelector as useSelector, useAppDispatch as useDispatch } from 'state/hooks';
+
+import { AppBar, Box, Toolbar, Typography, Button, IconButton, Chip, ButtonGroup } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+
+import getSpotifyAuthLink from 'utils/getSpotifyAuthLink';
 
 const Header = () => {
+	const userData = useSelector(state => state.userData);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const logOut = () => {
+		dispatch({ type: 'userData/updated', payload: {
+			token: '',
+			id: ''
+		}});
+		navigate('/', { replace: true });
+	}
+
+	const logIn = () => {
+		window.location.replace(getSpotifyAuthLink());
+	}
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
@@ -25,7 +45,22 @@ const Header = () => {
 						Playlist Generator
 					</Typography>
 
-					<Button color="primary" variant="outlined" size="small">Login</Button>
+					<>
+						
+						{/* {userData.id !== '' ? <Chip icon={<AccountCircleIcon />} label={userData.id} /> : null} */}
+						{/* <Button endIcon={<LogoutIcon />} color="primary" variant="outlined" size="small" onClick={() => logOut()}>Log Out</Button> */}
+						<ButtonGroup size="small" aria-label="small button group">
+							{userData.id !== '' ?
+								<>
+									<Button startIcon={<AccountCircleIcon />} disabled color="primary" variant="outlined" size="small">{userData.id}</Button>
+									<Button endIcon={<LogoutIcon />} color="primary" variant="outlined" size="small" onClick={() => logOut()}>Log Out</Button>
+								</>
+								:
+								<Button endIcon={<LoginIcon />} color="primary" variant="outlined" size="small" onClick={() => logIn()}>Log In</Button>
+							}
+							
+						</ButtonGroup>
+					</>
 				</Toolbar>
 			</AppBar>
 		</Box>
